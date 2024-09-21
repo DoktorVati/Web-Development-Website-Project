@@ -1,20 +1,23 @@
+
+
 body{
     text-align: center;
+    font-family:'Dosis', 'Arial', sans-serif;
     margin: 20px;
-    background-color: grey;
-    font-size: 40px;
+    background-color: rgb(154, 154, 154);
 }
 
 h1{
+    font-size: 80px;
     background-color: rgba(0, 0, 0, 0.193);
-    color:rgb(108, 31, 180);
-    text-shadow: 0 0 2px black;
+    color:rgb(135, 39, 224);
+    text-shadow: 0 0 3px black;
     border-style: solid;
     border-color: rgb(99, 9, 81);
 }
 
 h2{
-    font-size: 40px;
+    font-size: 60px;
     color: purple;
     text-shadow: 0 0 1px darkred;
 }
@@ -27,9 +30,12 @@ ul{
 
 p{
     padding: 5px;
-    
+    font-size: 20px;
 }
 
+#descriptions{
+    font-size: 10px;
+}
 .listIgnore{
     position: absolute;
     left: 20px;
