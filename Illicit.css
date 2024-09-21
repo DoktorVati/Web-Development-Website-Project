@@ -1,0 +1,13 @@
+body{
+    margin: 20px;
+    padding: 20px;
+    background-color: grey;
+    border-style: solid;
+    border-color: rgb(99, 9, 81);
+}
+
+h1{
+    color: purple;
+    text-shadow: 5px;
+    
+}
