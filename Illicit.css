@@ -42,6 +42,9 @@ h2{
     text-shadow: 0 0 1px darkred;
 }
 
+h3{
+    text-align: center;
+}
 
 ul{
     list-style:circle;
