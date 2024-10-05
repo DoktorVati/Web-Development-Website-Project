@@ -57,6 +57,12 @@ p{
     font-size: 20px;
 }
 
+.storeP {
+    text-align: center;
+    padding: 0px;
+    display: inline;
+}
+
 iframe{
     display: block;
     margin: 0 auto;
@@ -96,6 +102,15 @@ iframe{
     background-color: rgba(0, 0, 0, 0.193);
 
 }
+.grid-container-store {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 5px; 
+    align-items: start; /* Align items at the start */
+    width: 70%; 
+    height: auto;
+    margin: 0 auto; 
+}
 
 .item img {
     text-align: center;
@@ -103,6 +118,7 @@ iframe{
     margin-top: 10px; 
     margin-bottom: 10px;
 }
+
 img{
     
     background-color: transparent;
