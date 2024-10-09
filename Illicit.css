@@ -134,8 +134,11 @@ footer{
 }
 
 .dropdown {
-    position: relative;
+    position: fixed; /* so that it can stay in the top left corner*/
     display: inline-block;
+    z-index: 10;
+    top: 45px;
+    left: 45px;
 }
 
 .dropdown-content {
