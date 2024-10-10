@@ -44,8 +44,10 @@ async function generateImage(retries = 3, delay = 2000) {
                 const parentElement = generatedImage.parentElement; 
                 
                 generatedImage.src = imageUrl; // Set the image source
-                generatedImage.style.display = 'block'; // Show the image
+                generatedImage.style.display = 'fixed'; // Show the image
                 parentElement.style.display = 'block'; // Show the parent element
+                document.getElementById('generateButton1').style.display="hidden";
+
             } else {
                 console.error("Image not found in the response.", data);
                 alert("Unable to generate image. Please try again."); // Notify the user
@@ -113,4 +115,4 @@ async function generateText() {
 
 
 // Call the function on button press
-document.getElementById('generateButton').addEventListener('click', generateImage);
+document.getElementById('generateButton1').addEventListener('click', generateImage);
