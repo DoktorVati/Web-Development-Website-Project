@@ -5,9 +5,10 @@
         <title>Black Market Animalia Stock</title>
         <link href="Illicit.css" rel="stylesheet">
         <script src="blackMarketScipts.js" defer></script>
-
     </head>
+
     <span>
+        <!--This is the useful dropdown menu so that the user can go to different spots on the page or different websites.-->
             <div class="dropdown">
                 <div class="background-box"></div>
                 <img src="More.png" width="50" height="50" alt="Dropdown Menu" />
@@ -17,10 +18,10 @@
                     <a href="#Alien">Aliens</a>
                     <a href="#Stolen">Stolen Animals</a>
                     <a href="#Exctinct">Exctinct Animals</a>
-                    <a href="BMP.html">Visit Black Market Plantae</a>
+                    <a href="BMP.html">Visit Black Market Plantae</a> 
                 </div>
             </div>
-        <h1>Black Market Stock</h1>
+        <h1>Black Market Stock</h1> 
 
     </span>
     <body>
@@ -29,20 +30,23 @@
         </p>
         
         <p>
-            <h2><!--Title here--></h2>
+            <h2>For Sale</h2>
             <div>
+                <!--Each class represents another category of animals being traded.  Each with a reference ID so that the user can swap between them with the 
+                quick select dropdown menu-->
                 <div class="item">
                         <p id="GenMod">Genetically Modified</p> 
-                        <img src="GeneticEngineering.jpg" alt="Button for viewing Genetic Creations">
+                        <img src="GeneticEngineering.jpg" alt="Image for viewing Genetic Creations">
                         <div>
                             <h2 style="width:650px"></h2>
                         </div>
-                        
+                        <!--Each image will be ai generated but an Image generating API is expensive and charged by the call, due to this, I only will have 
+                        1 of each category being generated when the user presses the load more button-->
                         <div class="grid-container-store">    
                                 <div class="item">
                                     <img id ="Joker.jpg" src="Joker.jpg" alt = "generated picture 1" aria-colspan="1">
                                     <p class="storeP">Price: 12 Btc</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <p class="storeP">This animal is crazy.</p> <!--I do not have a description yet-->
                                 </div>
 
                                 <div class="item" >
@@ -57,19 +61,19 @@
                                     <p class="storeP">This animal is crazy.</p>
                                 </div>
                                 <div class="item">
-                                    <!--Change id to generateButton1 to work-->
+                                    <!--Will change button in future to be below all the images-->
+                                    <!--Change id to generateButton1 to work, set to none right now so that I dont have uneccessary API calls-->
                                     <button id="generateButton" style = "width:200px; height:50px; color: black; background-color: gray; display: inline; font-size: large;" >Load More</button>
-
-                                    
                                 </div>
-                                <div class="item" style="display: none;">
+                                <div class="item" style="display: none;"> <!--This is the ai generated image, dispalay is none so it is hidden, Once generated, will become visible-->
                                     <img id="generated1" src="" alt = "generated picture 4" style="display: fixed;">
                                     <p class="storeP">Price: 2 Btc</p>
-                                    <p id="generatedText1" class="storeP">This animal is crazy.</p>
+                                    <p id="generatedText1" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
                                 </div>
                         </div>
                 </div>
                 <div class="item">
+                    <!--Alien category-->
                         <p id="Alien">Alien</p> 
                         <img src="Alien1.jpg" alt="Button for viewing Alien Animals">
                         <div>
@@ -104,6 +108,7 @@
                     </div>
                 <div class="item">
                     <p id="Stolen">Stolen</p> 
+                    <!--Stolen category-->
                     <img src="Stolen.jpg" alt="Button for viewing Stolen Animals">
                     <div>
                         <h2 style="width:650px"></h2>
@@ -137,6 +142,7 @@
                 </div>
                 <div class="item">
                         <p id="Extinct">Extinct</p> 
+                        <!--Extinct category-->
                         <img src="Extinct.jpg" alt="Button for viewing Extinct Animals">
                         <div>
                             <h2 style="width:650px"></h2>
@@ -176,7 +182,7 @@
 
     </body>
 
-
+<!--This footer has a button to get to the top fast and a filler text-->
     <footer>
         <a href="">TOP</a>
         <p>Secured by Animalia Marketplace</p>

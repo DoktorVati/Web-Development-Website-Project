@@ -1,5 +1,4 @@
-
-
+/*This is the body css*/
 body{
     font-family:'Dosis', 'Arial', sans-serif;
     margin: 20px;
@@ -8,6 +7,7 @@ body{
 
 }
 
+/*This is the span css for Blackmarketstock and index*/
 span {
     display: flex;
     align-items: center;
@@ -20,6 +20,7 @@ span {
     position: relative; 
 }
 
+/*This is the h1 css for Blackmarketstock and index*/
 h1 {
     text-align: center;
     font-size: 80px;
@@ -31,6 +32,7 @@ h1 {
 }
 
 
+/*This is the h2 css for Blackmarketstock and index*/
 
 h2{
     text-align: center;
@@ -57,6 +59,7 @@ p{
     font-size: 20px;
 }
 
+/*This is the css for the store paragaphs*/
 .storeP {
     text-align: center;
     padding: 0px;

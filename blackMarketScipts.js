@@ -1,5 +1,8 @@
+// I decided to have it retry 3 times just in case 1 fails, and I added a delay so that it waits for the prompt to complete.
 async function generateImage(retries = 3, delay = 2000) {
+    // This is the url for the api
     const url = "https://modelslab.com/api/v6/images/text2img";
+    // This is the payload that they want me to use, I use the prompt and negative prompt to generate a prompted image. 
     const payload = {
         key: "fAOgszo9xJVYssy7sfsteGmZnuF0N82de1oZ880rEsyBZneMu66FrHj3n0N8",
         model_id: "dreamshaper-v8",
@@ -23,7 +26,8 @@ async function generateImage(retries = 3, delay = 2000) {
         track_id: null
     };
 
-    try {
+    // In case it fails, I surrounded it in a try and catch
+    try {  
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -31,26 +35,27 @@ async function generateImage(retries = 3, delay = 2000) {
             },
             body: JSON.stringify(payload)
         });
-
+            // The response for access to the website
         if (response.ok) {
             const data = await response.json();
-            console.log(data); // Log the entire response for debugging
+            console.log(data); // I Log the entire response so that I can use it for debugging
             
             // Access the output array and get the first image URL
             if (data.output && data.output.length > 0) {
-                const imageUrl = data.output[0]; // Get the image URL from the output array
+                // Get the image URL from the output array
+                const imageUrl = data.output[0]; 
+                const generatedImage = document.getElementById('generated1');  // This element is what will be replaced by the AI image
 
-                const generatedImage = document.getElementById('generated1');
-                const parentElement = generatedImage.parentElement; 
+                const parentElement = generatedImage.parentElement;  // This parent element is assigned so that it can be no longer hidden
                 
                 generatedImage.src = imageUrl; // Set the image source
                 generatedImage.style.display = 'fixed'; // Show the image
                 parentElement.style.display = 'block'; // Show the parent element
-                document.getElementById('generateButton1').style.display="hidden";
+                document.getElementById('generateButton1').style.display="hidden"; // Hide the generate button image after click so that it doesn't cause more api calls 
 
             } else {
-                console.error("Image not found in the response.", data);
-                alert("Unable to generate image. Please try again."); // Notify the user
+                console.error("Image not found in the response.", data); // Error
+                alert("Unable to generate image. Please try again."); // 
             }
         } else {
             throw new Error(response.statusText);
@@ -58,24 +63,24 @@ async function generateImage(retries = 3, delay = 2000) {
     } catch (error) {
         console.error("Error:", error);
         if (retries > 0) {
-            console.log(`Retrying... (${retries} attempts left)`);
             await new Promise(res => setTimeout(res, delay)); // Wait for specified delay
             return generateImage(retries - 1, delay); // Retry the function
-        } else {
-            alert("Failed to generate image after multiple attempts. Please try again later."); // Notify the user
-        }
+        } 
     }
     
     // Call to generate text after the image generation attempt
     generateText();
 }
+
+// Function for generating the AI text for the image. 
+// It is set up similarly to the other API call
 async function generateText() {
     const url = 'https://contentai-net-text-generation.p.rapidapi.com/v1/text/blog-articles?category=short%20description%20of%20a%20crazy%20animal';
     const options = {
         method: 'GET',
         headers: {
-            'x-rapidapi-key': '736245e896mshfb15eb128512e4bp13fe27jsnf4b1d2d97eee',
-            'x-rapidapi-host': 'contentai-net-text-generation.p.rapidapi.com'
+            'x-rapidapi-key': '736245e896mshfb15eb128512e4bp13fe27jsnf4b1d2d97eee', // API key
+            'x-rapidapi-host': 'contentai-net-text-generation.p.rapidapi.com' // Website
         }
     };
 
@@ -87,10 +92,11 @@ async function generateText() {
             
             // Extract the text part starting from "text:"
             const text = result.text;
-            const startIndex = text.indexOf("text:") + 5; // Start after "text:"
+            const startIndex = text.indexOf("text:") + 5; // Start after the chars "text:"
             const textSubstring = text.substring(startIndex).trim(); // Extract substring
 
             // Find the first two periods and cut the text there
+            // I do this because it has a title sometimes and this makes sure it is not shown.
             const firstPeriodIndex = textSubstring.indexOf('.') + 1; // First period
             const secondPeriodIndex = textSubstring.indexOf('.', firstPeriodIndex) + 1; // Second period
             const thirdPeriodIndex = textSubstring.indexOf('.', secondPeriodIndexPeriodIndex) + 1; // Third period
@@ -103,7 +109,7 @@ async function generateText() {
             // Update the paragraph with id 'generatedText1' with the processed text
             const generatedTextElement = document.getElementById('generatedText1');
             generatedTextElement.textContent = limitedText; // Set the text content
-            generatedTextElement.style.display = 'block'; // Show the paragraph
+            generatedTextElement.style.display = 'block'; // Show the paragraph after generation
         } else {
             console.error("Error fetching text:", response.statusText);
         }
@@ -112,7 +118,5 @@ async function generateText() {
     }
 }
 
-
-
-// Call the function on button press
+// Call the function on button press to generate the image, after image generation, it calls text generation. 
 document.getElementById('generateButton1').addEventListener('click', generateImage);
