@@ -172,6 +172,21 @@ footer{
 .dropdown-content a:hover {
     background-color: #f1f1f1ae;
 }
+.cart-container {
+    position: fixed; /* Keeps the container fixed in the top right corner */
+    display: flex;  /*Use flexbox to align items next to each other */
+    z-index: 10;
+    top: 45px;
+    right: 45px;
+}
+
+.cart {
+    display: inline-flex; /* Allows items within the cart to align nicely */
+    align-items: center; /* Centers content vertically */
+    align-self: center;
+    margin-left: 10px; /* Adds space between the items */
+}
+
 
 /* Background box behind the image */
 .background-box {
