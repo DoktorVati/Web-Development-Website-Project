@@ -172,6 +172,22 @@ footer{
 .dropdown-content a:hover {
     background-color: #f1f1f1ae;
 }
+
+ 
+#generateButtonClass,#generateButtonClass2,#generateButtonClass3,#generateButtonClass4 {
+    transition: background-color 0.15s, transform 0.15s; 
+}
+
+#generateButtonClass:hover,#generateButtonClass2:hover,#generateButtonClass3:hover,#generateButtonClass4:hover {
+    background-color: #000000ae;
+    transform: scale(1.05); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+}
+
+
+
+
+
 .cart-container {
     position: fixed; /* Keeps the container fixed in the top right corner */
     display: flex;  /*Use flexbox to align items next to each other */
