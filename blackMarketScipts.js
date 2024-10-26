@@ -147,8 +147,51 @@ async function generateText(value) {
     }
 }
 
-// Call the function on button press to generate the image, after image generation, it calls text generation. 
-document.getElementById('generateButton1').addEventListener('click', () => generateImage(3, 2000, 1, "ultra realistic portrait of a bizarre, fantastical creature with exaggerated features, bad anatomy, bad proportions, wild colors, extra limbs, mutated features, large expressive eyes, mix of animals, hyper detail, 8K, RAW, unedited, symmetrical balance"));
-document.getElementById('generateButton2').addEventListener('click', () => generateImage(3, 2000, 2, "ultra realistic portrait of an alien creature with alien features, bad anatomy, bad proportions, extra limbs, mutated features, large expressive eyes, hyper detail, 8K, RAW, unedited, symmetrical balance"));
-document.getElementById('generateButton3').addEventListener('click', () => generateImage(3, 2000, 3, "ultra realistic portrait of an animal, hyper detail, 8K, RAW, unedited, symmetrical balance"));
-document.getElementById('generateButton4').addEventListener('click', () => generateImage(3, 2000, 4, "ultra realistic portrait of a dinosaur, scary, hyper detail, 8K, RAW, unedited, symmetrical balance"));
+// Check if the current page is BlackMarketStock.html
+if (window.location.pathname.includes('BlackMarketStock.html')) {
+    document.getElementById('generateButton1').addEventListener('click', () => {
+        generateImage(3, 2000, 1, "ultra realistic portrait of a bizarre, fantastical creature with exaggerated features, bad anatomy, bad proportions, wild colors, extra limbs, mutated features, large expressive eyes, mix of animals, hyper detail, 8K, RAW, unedited, symmetrical balance")
+            .then(() => textGeneration()); // Call text generation after image generation
+    });
+
+    document.getElementById('generateButton2').addEventListener('click', () => {
+        generateImage(3, 2000, 2, "ultra realistic portrait of an alien creature with alien features, bad anatomy, bad proportions, extra limbs, mutated features, large expressive eyes, hyper detail, 8K, RAW, unedited, symmetrical balance")
+            .then(() => textGeneration());
+    });
+
+    document.getElementById('generateButton3').addEventListener('click', () => {
+        generateImage(3, 2000, 3, "ultra realistic portrait of an animal, hyper detail, 8K, RAW, unedited, symmetrical balance")
+            .then(() => textGeneration());
+    });
+
+    document.getElementById('generateButton4').addEventListener('click', () => {
+        generateImage(3, 2000, 4, "ultra realistic portrait of a dinosaur, scary, hyper detail, 8K, RAW, unedited, symmetrical balance")
+            .then(() => textGeneration());
+    });
+}
+
+// Load cart data from local storage on page load
+let cartCount = localStorage.getItem('cartCount') ? parseInt(localStorage.getItem('cartCount')) : 0;
+
+// Update the displayed cart count
+document.getElementById('itemsInCart').textContent = cartCount;
+
+document.querySelectorAll('.addToCartBtn').forEach(button => {
+    button.addEventListener('click', function() {
+        const priceText = this.parentElement.querySelectorAll('.storeP')[0].textContent; // Get the price text
+        const price = priceText.split(': ')[1]; // Extract the price
+        cartCount++; // Increment cart count
+
+        // Update local storage
+        localStorage.setItem('cartCount', cartCount);
+
+        // Update the cart display
+        document.getElementById('itemsInCart').textContent = cartCount;
+        
+        console.log(`Added to cart: ${price}`); // For debugging
+        console.log(`Total items in cart: ${cartCount}`); // Update cart count
+    });
+});
+
+
+
