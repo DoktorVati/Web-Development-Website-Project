@@ -195,3 +195,44 @@ document.querySelectorAll('.addToCartBtn').forEach(button => {
 
 
 
+function showPopup() {
+    // Define an array of messages
+    const messages = [
+        "Your IP is being leaked!        (This is a popup for BlackMarketAnimalia)",
+        "You are being hacked!        (This is a popup for BlackMarketAnimalia)",
+        "Virus detected!        (This is a popup for BlackMarketAnimalia)",
+        "Suspicious activity detected on your device!        (This is a popup for BlackMarketAnimalia)",
+        "Your security is at risk!        (This is a popup for BlackMarketAnimalia)",
+        "Immediate action required: malware found!        (This is a popup for BlackMarketAnimalia)"
+    ];
+
+    // Select a random message from the array
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+    // Ensure popups don't go off-screen
+    let left = Math.min(Math.floor(Math.random() * (window.innerWidth - 550)), window.innerWidth - 550);
+    let top = Math.min(Math.floor(Math.random() * (window.innerHeight - 300)), window.innerHeight - 300);
+
+    // Open a new window at the random position
+    let myWindow = window.open("", "", `width=550,height=300,left=${left},top=${top}`);
+    myWindow.document.writeln(`<h1 style='color: red;'>${randomMessage}</h1>`);
+    myWindow.document.writeln("<p>Please take immediate action!</p>");
+    myWindow.document.close(); // Close the document stream
+
+    // Schedule the next popup
+    randomPopup();
+}
+
+function randomPopup() {
+    // Generate a random time between 20 and 60 seconds (20000 to 60000 milliseconds)
+    const minTime = 20000; // 20 seconds
+    const maxTime = 60000; // 60 seconds
+    const randomTime = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
+
+    // Set a timeout to show the popup
+    setTimeout(showPopup, randomTime);
+}
+
+// Call the randomPopup function on window load
+// Enable for build
+//window.onload = randomPopup;
