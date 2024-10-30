@@ -142,6 +142,7 @@ iframe{
     margin: 10px 0; 
 }
 
+
 .storeP {
     display: flex; /* Use flexbox for alignment */
     align-items: center; /* Center items vertically */
@@ -151,7 +152,9 @@ iframe{
     margin-right: 5px; /* Add space between label and input */
 }
 
-
+label {
+    font-size: 24px;
+}
 
 .quantityText {
     width: 40px; /* Set a fixed width for the input */
@@ -286,4 +289,25 @@ footer{
 .addToCartBtn:active {
     transform: translateY(0); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+
+.total {
+    font-size: 20px;
+    display: block; 
+    align-items: center; 
+    align-self: center;
+    align-content: center;
+    margin-top: 50px;
+    background-color: #797979b9; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    justify-content: center; 
+}
+
+.paymentContainer {
+    margin-bottom: 200px;
 }

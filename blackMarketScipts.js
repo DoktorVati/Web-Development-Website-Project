@@ -251,15 +251,16 @@ function displayCart() {
         <img src="${item.image}" alt="${item.name}" style="width: 100px; height: auto; margin-right: 10px;">
         <div style="flex-grow: 1; display: flex; flex-direction: column; margin-right: 10px;">
             <span class="specialDescription">${name}</span>
-            <span style="margin-top: 5px;">Price: ${price} Btc</span> <!-- Price below special description -->
+            <span class="specialDescription" style="margin-top: 5px;">Price: ${price} BTC</span> <!-- Price below special description -->
         </div>
         <div style="display: flex; align-items: center; margin-right: 10px;">
-            <label style="margin-right: 5px;">Quantity:</label>
+            <label style="margin-left: 25px; margin-right: 5px;">Quantity:</label>
             <span class="quantityText" contenteditable="true" data-name="${name}" data-price="${price}">${quantity}</span>
         </div>
-        <button class="removeBtn" data-name="${name}" data-price="${price}">Remove from Cart</button>
-    </div>
-    <p class="storeP" style="margin-top: 5px;">Total Cost: ${itemTotalCost} Btc</p>
+        <p class="storeP" style="margin-left:50px;">Total Cost: ${itemTotalCost} BTC</p>
+        <button type="button" style="margin-left: 50px; " class="removeBtn" data-name="${name}" data-price="${price}">Remove from Cart</button>
+
+        </div>
 `;
 
 
@@ -281,9 +282,9 @@ function displayCart() {
     document.getElementById('payButton').addEventListener('click', () => {
         const walletAddress = document.getElementById('walletAddress').value;
         
-        // Validate wallet address length (example: Bitcoin addresses are usually 26-35 characters)
+        // Validate wallet address length (Bitcoin addresses are usually 26-35 characters)
         if (walletAddress.length >= 26 && walletAddress.length <= 35) {
-            alert(`Payment of ${totalCost.toFixed(2)} Bitcoin will be sent to ${walletAddress}`);
+            alert(`Payment of ${totalCost.toFixed(2)} Bitcoin will be sent to our wallet at g7KjZy3LqV8uH2rM9wTdQ4XfRzKpN5sF from your wallet address ${walletAddress}`);
             clearCart(); // Clear the cart after payment is confirmed
         } else {
             alert('Please enter a valid wallet address (26-35 characters).');
@@ -298,7 +299,9 @@ function displayCart() {
             removeFromCart(name, price); // Call remove function
         });
     });
+    
 
+    
     // Add event listeners for quantity text fields
 document.querySelectorAll('.quantityText').forEach(quantityField => {
     quantityField.addEventListener('keypress', function(event) {
@@ -391,8 +394,8 @@ function clearCart() {
 }
 
 // Function to add item to cart
-function addToCart(name, price, image, description) {
-    cartItems.push({ name, price, image, description }); // Include description
+function addToCart(name, price, image) {
+    cartItems.push({ name, price, image }); // Include description
     localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
     cartCount = cartItems.length; // Update cart count
     document.getElementById('itemsInCart').textContent = cartCount; // Display updated count
@@ -406,13 +409,12 @@ document.querySelectorAll('.addToCartBtn').forEach(button => {
         
         // Get description by targeting the text node after the <br>
         const descriptionParagraph = this.parentElement.querySelector('.storeP');
-        const description = descriptionParagraph.childNodes[1].textContent.trim(); // Get text node after <br>
         
         const priceText = this.parentElement.querySelectorAll('.storeP')[1].textContent; // Get price text
         const price = parseFloat(priceText.split(': ')[1]); // Extract price
         const image = this.parentElement.querySelector('img').src; // Get item image
         
-        addToCart(name, price, image, description); // Call add to cart function
+        addToCart(name, price, image); // Call add to cart function
     });
 });
 
