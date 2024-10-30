@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="Illicit.css">
+</head>
+<!--This is the useful dropdown menu so that the user can go to different spots on the page or different websites.-->
+<div class="dropdown">
+    <div style="z-index: 0;" class="background-box"></div>
+    <img src="Images/UI/More.png" width="50" height="50" alt="Dropdown Menu" />
+    <div class="dropdown-content">
+        <a href="index.html">Back to Black Market Homepage</a>
+        <a href="BlackMarketStock.html">View our Stock</a> <!--Takes them to the market page-->
+        <a href="BMP.html">Visit Black Market Plantae</a> 
+    </div>
+</div>
+
+
+<a href="BlackMarketCart.html">
+    <div class="cart-container">
+        <!-- This will be the cart button -->
+        <div class="cart">
+            <p id="itemsInCart"; style="margin: 0; z-index: 0; color:black">0</p>
+        </div>
+    
+    <div class="cart">
+        <div class="background-box" style="padding-inline: 30px; z-index: 0;"></div>
+            <img src="Images/UI/shopping-cart.png" width="50" height="50" alt="Cart button" />  
+        </div>
+    </div>
+</a>
+
+<body>
+    <div class="container">
+        <h1>Your Shopping Cart</h1>
+        <div id="cartItems"></div>
+        <div id="totalCost" class="total"></div>
+        <div id="paymentContainer"></div>
+        <button id="checkoutBtn">Checkout</button>
+    </div>
+
+    <script src="blackMarketScipts.js"></script>
+</body>
+</html>

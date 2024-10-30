@@ -214,27 +214,215 @@ if (window.location.pathname.includes('BlackMarketStock.html')) {
 }
 
 // Load cart data from local storage on page load
-let cartCount = localStorage.getItem('cartCount') ? parseInt(localStorage.getItem('cartCount')) : 0;
+let cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // Retrieve items from local storage
+let cartCount = cartItems.length; // Count of items in cart
 
 // Update the displayed cart count
 document.getElementById('itemsInCart').textContent = cartCount;
 
-document.querySelectorAll('.addToCartBtn').forEach(button => {
-    button.addEventListener('click', function() {
-        const priceText = this.parentElement.querySelectorAll('.storeP')[0].textContent; // Get the price text
-        const price = priceText.split(': ')[1]; // Extract the price
-        cartCount++; // Increment cart count
+// Function to display cart items, total cost, and payment option
+function displayCart() {
+    const cartItemsContainer = document.getElementById("cartItems");
+    const totalCostContainer = document.getElementById("totalCost");
+    const paymentContainer = document.getElementById("paymentContainer");
 
-        // Update local storage
-        localStorage.setItem('cartCount', cartCount);
+    let totalCost = 0;
+    cartItemsContainer.innerHTML = ''; // Clear previous content
 
-        // Update the cart display
-        document.getElementById('itemsInCart').textContent = cartCount;
+    const itemCounts = {};
+
+    cartItems.forEach(item => {
+        const key = `${item.name}-${item.price}`; // Unique key for each item
+        itemCounts[key] = (itemCounts[key] || 0) + 1; // Increment count
+    });
+
+    for (const [key, quantity] of Object.entries(itemCounts)) {
+        const [name, price] = key.split('-');
+        const item = cartItems.find(i => i.name === name); // Find original item
+
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("item");
+
+        // Calculate total cost for this item
+        const itemTotalCost = (price * quantity).toFixed(2);
+
+        itemDiv.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" style="width: 100px; height: auto;">
+        <p class="storeP">
+            <span class="specialDescription">${name}</span><br>
+        </p>
+        <p class="storeP">Price: ${price} Btc</p>
+        <p class="storeP">
+            <label>Quantity:</label>
+            <span class="quantityText" contenteditable="true" data-name="${name}" data-price="${price}">${quantity}</span>
+        </p>
+        <p class="storeP">
+            <button class="removeBtn" data-name="${name}" data-price="${price}">Remove from Cart</button>
+        </p>
+
+        <p class="storeP">Total Cost: ${itemTotalCost} Btc</p>
+    `;
+    
+        cartItemsContainer.appendChild(itemDiv);
+        totalCost += item.price * quantity; // Calculate total cost using quantity
+    }
+
+    totalCostContainer.innerHTML = `Total Cost: ${totalCost.toFixed(2)} Bitcoin`;
+    
+    // Payment form
+    paymentContainer.innerHTML = `
+        <label for="walletAddress">Wallet Address:</label>
+        <input type="text" id="walletAddress" placeholder="Enter your wallet address">
+        <button id="payButton">Pay Now</button>
+    `;
+
+    // Event listener for payment button
+    document.getElementById('payButton').addEventListener('click', () => {
+        const walletAddress = document.getElementById('walletAddress').value;
         
-        console.log(`Added to cart: ${price}`); // For debugging
-        console.log(`Total items in cart: ${cartCount}`); // Update cart count
+        // Validate wallet address length (example: Bitcoin addresses are usually 26-35 characters)
+        if (walletAddress.length >= 26 && walletAddress.length <= 35) {
+            alert(`Payment of ${totalCost.toFixed(2)} Bitcoin will be sent to ${walletAddress}`);
+            clearCart(); // Clear the cart after payment is confirmed
+        } else {
+            alert('Please enter a valid wallet address (26-35 characters).');
+        }
+    });
+
+    // Add event listeners for remove buttons
+    document.querySelectorAll('.removeBtn').forEach(button => {
+        button.addEventListener('click', function() {
+            const name = this.getAttribute('data-name'); // Get name from data attribute
+            const price = parseFloat(this.getAttribute('data-price')); // Get price from data attribute
+            removeFromCart(name, price); // Call remove function
+        });
+    });
+
+    // Add event listeners for quantity text fields
+document.querySelectorAll('.quantityText').forEach(quantityField => {
+    quantityField.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent newline
+            this.blur(); // Remove focus to trigger blur event
+        }
+    });
+
+    quantityField.addEventListener('blur', function() {
+        const newQuantity = parseInt(this.textContent.trim(), 10);
+        const name = this.getAttribute('data-name'); // Get name from data attribute
+        const price = parseFloat(this.getAttribute('data-price')); // Get price from data attribute
+
+        // Validate newQuantity
+        if (!isNaN(newQuantity) && newQuantity >= 0 && newQuantity <= 100) {
+            updateQuantity(name, price, newQuantity);
+        } else {
+            alert('Please enter a valid quantity between 0 and 100.');
+            this.textContent = '1'; // Reset to 1 if invalid
+        }
     });
 });
+
+}
+
+// Function to remove item from cart entirely
+function removeFromCart(name, price) {
+    cartItems = cartItems.filter(item => !(item.name === name && item.price === price)); // Remove all quantities
+    localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
+    cartCount = cartItems.length; // Update cart count
+    document.getElementById('itemsInCart').textContent = cartCount; // Update displayed count
+    displayCart(); // Refresh the cart display
+}
+
+// Function to update item quantity
+function updateQuantity(name, price, newQuantity) {
+    // Find the item index
+    const itemIndex = cartItems.findIndex(item => item.name === name && item.price === price);
+    
+    if (itemIndex !== -1) {
+        // If new quantity is 0 or less, remove the item from cart
+        if (newQuantity <= 0) {
+            removeFromCart(name, price);
+        } else {
+            const currentItem = cartItems[itemIndex];
+            // Update the quantity in the cart based on the newQuantity
+            const currentCount = cartItems.filter(item => item.name === name && item.price === price).length;
+
+            // Update the cart
+            if (newQuantity > currentCount) {
+                // Add items back to the cart
+                for (let i = 0; i < (newQuantity - currentCount); i++) {
+                    addToCart(currentItem.name, currentItem.price, currentItem.image, currentItem.description);
+                }
+            } else if (newQuantity < currentCount) {
+                // Remove items from the cart
+                for (let i = 0; i < (currentCount - newQuantity); i++) {
+                    removeOneFromCart(currentItem.name, currentItem.price);
+                }
+            }
+        }
+    }
+
+    displayCart(); // Refresh the cart display after updating quantity
+}
+
+// Function to remove one item from cart
+function removeOneFromCart(name, price) {
+    const index = cartItems.findIndex(item => item.name === name && item.price === price); // Find the item
+    if (index !== -1) {
+        cartItems.splice(index, 1); // Remove one instance of the item
+        localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
+        cartCount = cartItems.length; // Update cart count
+        document.getElementById('itemsInCart').textContent = cartCount; // Update displayed count
+        displayCart(); // Refresh the cart display
+    }
+}
+
+// Function to clear the cart
+function clearCart() {
+    cartItems = []; // Reset cart items array
+    localStorage.removeItem('cartItems'); // Clear items from local storage
+    cartCount = 0; // Reset count
+    document.getElementById('itemsInCart').textContent = cartCount; // Update displayed count
+    document.getElementById("cartItems").innerHTML = ''; // Clear cart display
+    document.getElementById("totalCost").innerHTML = ''; // Clear total cost display
+    document.getElementById("paymentContainer").innerHTML = ''; // Clear payment form
+    alert('Thank you for your payment! Your cart has been cleared.'); // Confirmation message
+}
+
+// Function to add item to cart
+function addToCart(name, price, image, description) {
+    cartItems.push({ name, price, image, description }); // Include description
+    localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
+    cartCount = cartItems.length; // Update cart count
+    document.getElementById('itemsInCart').textContent = cartCount; // Display updated count
+    console.log(`Added to cart: ${name} - ${price}`); // For debugging
+}
+
+// Attach event listeners to "Add to Cart" buttons
+document.querySelectorAll('.addToCartBtn').forEach(button => {
+    button.addEventListener('click', function() {
+        const name = this.parentElement.querySelector('.specialDescription').textContent; // Get item name
+        
+        // Get description by targeting the text node after the <br>
+        const descriptionParagraph = this.parentElement.querySelector('.storeP');
+        const description = descriptionParagraph.childNodes[1].textContent.trim(); // Get text node after <br>
+        
+        const priceText = this.parentElement.querySelectorAll('.storeP')[1].textContent; // Get price text
+        const price = parseFloat(priceText.split(': ')[1]); // Extract price
+        const image = this.parentElement.querySelector('img').src; // Get item image
+        
+        addToCart(name, price, image, description); // Call add to cart function
+    });
+});
+
+// Check if the current page is the cart page and display items
+if (window.location.pathname.includes('BlackMarketCart.html')) {
+    window.onload = displayCart; // Display cart items when the page loads
+}
+
+
+
+
 
 
 

@@ -142,6 +142,21 @@ iframe{
     margin: 10px 0; 
 }
 
+.storeP {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+}
+
+.storeP label {
+    margin-right: 5px; /* Add space between label and input */
+}
+
+
+
+.quantityText {
+    width: 40px; /* Set a fixed width for the input */
+    text-align: center; /* Center text inside the editable area */
+}
 
 img{
     
