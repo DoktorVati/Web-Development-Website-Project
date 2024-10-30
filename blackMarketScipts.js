@@ -247,21 +247,22 @@ function displayCart() {
         const itemTotalCost = (price * quantity).toFixed(2);
 
         itemDiv.innerHTML = `
-        <img src="${item.image}" alt="${item.name}" style="width: 100px; height: auto;">
-        <p class="storeP">
-            <span class="specialDescription">${name}</span><br>
-        </p>
-        <p class="storeP">Price: ${price} Btc</p>
-        <p class="storeP">
-            <label>Quantity:</label>
+    <div class="storeP" style="display: flex; align-items: center; justify-content: space-between;">
+        <img src="${item.image}" alt="${item.name}" style="width: 100px; height: auto; margin-right: 10px;">
+        <div style="flex-grow: 1; display: flex; flex-direction: column; margin-right: 10px;">
+            <span class="specialDescription">${name}</span>
+            <span style="margin-top: 5px;">Price: ${price} Btc</span> <!-- Price below special description -->
+        </div>
+        <div style="display: flex; align-items: center; margin-right: 10px;">
+            <label style="margin-right: 5px;">Quantity:</label>
             <span class="quantityText" contenteditable="true" data-name="${name}" data-price="${price}">${quantity}</span>
-        </p>
-        <p class="storeP">
-            <button class="removeBtn" data-name="${name}" data-price="${price}">Remove from Cart</button>
-        </p>
+        </div>
+        <button class="removeBtn" data-name="${name}" data-price="${price}">Remove from Cart</button>
+    </div>
+    <p class="storeP" style="margin-top: 5px;">Total Cost: ${itemTotalCost} Btc</p>
+`;
 
-        <p class="storeP">Total Cost: ${itemTotalCost} Btc</p>
-    `;
+
     
         cartItemsContainer.appendChild(itemDiv);
         totalCost += item.price * quantity; // Calculate total cost using quantity
