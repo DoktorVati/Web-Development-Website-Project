@@ -13,7 +13,7 @@
     <span>
         <!--This is the useful dropdown menu so that the user can go to different spots on the page or different websites.-->
             <div class="dropdown">
-                <div class="background-box"></div>
+                <div style="z-index: -1;" class="background-box"></div>
                 <img src="Images/UI/More.png" width="50" height="50" alt="Dropdown Menu" />
                 <div class="dropdown-content">
                     <a href="index.html">Back to Black Market Homepage</a>
@@ -28,11 +28,11 @@
             <div class="cart-container">
                 <!-- This will be the cart button -->
                 <div class="cart">
-                    <p id="itemsInCart"; style="margin: 0;">0</p>
+                    <p id="itemsInCart"; style="margin: 0; z-index: 1;">0</p>
                 </div>
                 
                 <div class="cart">
-                    <div class="background-box" style="padding-inline: 20px;"></div>
+                    <div class="background-box" style="padding-inline: 20px; z-index: -1;"></div>
                     <img src="Images/UI/shopping-cart.png" width="50" height="50" alt="Cart button" />  
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <!--Each class represents another category of animals being traded.  Each with a reference ID so that the user can swap between them with the 
                 quick select dropdown menu-->
                 <div class="item">
-                        <p id="GenMod">Genetically Modified</p> 
+                        <p id="GenMod"><span class="specialDescription">Genetically Modified</span></p> 
                         <img src="Images/GenModImages/GeneticEngineering.jpg" alt="Image for viewing Genetic Creations">
                         <div>
                             <h2 style="width:650px"></h2>
@@ -62,7 +62,7 @@
                                 <div class="item">
                                     <img id ="Joker.jpg" src="Images/GenModImages/GeneticEngineering2.jpg" alt = "generated picture 1" aria-colspan="1">
                                     <p class="storeP">
-                                        Meet the fascinating Jellydog <br> A unique blend of humanity's beloved dog and the enigmatic jellyfish. These loyal companions create a shimmering field of jelly around them, providing an extra layer of protection and allure. With their playful spirit and mesmerizing presence, Jellydogs are not just pets; they are guardians of both heart and home.
+                                        <span class="specialDescription">The Jellydog</span> <br> A unique blend of our beloved dog and the enigmatic jellyfish. These loyal companions create a shimmering field of jelly around them, providing an extra layer of protection and allure. With their playful spirit and mesmerizing presence, Jellydogs are not just pets; they are guardians of both heart and home.
                                     </p>
                                     <p class="storeP">Price: 3 Btc</p>
                                     <button class="addToCartBtn">Add to Cart</button>
@@ -71,38 +71,41 @@
 
                                 <div class="item" >
                                     <img src="Images/GenModImages/GeneticEngineering3.jpg" alt = "generated picture 2">
-                                    <p class="storeP">Meet the Golden Gull <br>
-                                         This breed embodies the best of both species with the friendly nature and playful retriever combined with the wings of a seagull. The Golden Gull is not just a pet, but a joyful companion that loves to play and make every day an adventure. Whether fetching a ball or soaring through the air, this breed will be perfect.
+                                    <p class="storeP"><span class="specialDescription">The Golden Gull</span> <br>This breed embodies the best of both species with the friendly nature and playful retriever combined with the wings of a seagull. The Golden Gull is not just a pet, but a joyful companion that loves to play and make every day an adventure. Whether fetching a ball or soaring through the air, this breed will be perfect.
                                     </p>
                                     <p class="storeP">Price: 7 Btc</p>
                                     <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <div class="item">
-                                    <img src="Images/GenModImages/GeneticEngineering4.jpg" alt = "generated picture 3">
-                                    <p class="storeP">Price: 12 Eth</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <img src="Images/GenModImages/GeneticEngineering4.jpg" alt="generated picture 3">
+                                    <p class="storeP"><span class="specialDescription">The Lioctocorpis</span><br>This animal is a combination of jungle plants, scorpions, octopi, lobsters, and a lion. This is perfect for warfare.</p>
+                                    <p class="storeP">Price: 12 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
                                 <div class="item">
-                                    <img src="Images/GenModImages/GeneticEngineering5.jpg" alt = "generated picture 4">
-                                    <p class="storeP">Price: 12 Eth</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <img src="Images/GenModImages/GeneticEngineering5.jpg" alt="generated picture 4">
+                                    <p class="storeP"><span class="specialDescription">The MaGrizzly</span><br>This animal is a combination of a grizzly bear and a macaw giving it the ability to fly and speak to humans.</p>
+                                    <p class="storeP">Price: 12 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
+                                
+
                                 <div class = "item" id = "generateButtonClass" style="width: 200%; margin-bottom: 200dp;display: block; column-span: all;">
-                                    <!--Will change button in future to be below all the images-->
                                     <!--Change id to generateButton1 to work, set to none right now so that I dont have uneccessary API calls-->
                                     <button id="generateButton1" style = "width:100%; ;height:50px; color: black; background-color: gray; display: inline-block; font-size: large; margin-bottom: 100dp;" >Load More</button>
                                 </div>
                                 <div class="item" style="width: 200%; display: none;"> <!--This is the ai generated image, dispalay is none so it is hidden, Once generated, will become visible-->
                                     <img id="generated1" src="" alt = "generated picture 4" style="display: inline;">
+                                    <p id="generatedText1" style="display: block;" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
                                     <p class="storeP" style="display:block;">Price: 2 Btc</p>
-                                    <p id="generatedText1" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
                         </div>
                 </div>
                 <div class="item">
                     <!--Alien category-->
-                        <p id="Alien">Alien</p> 
+                        <p id="Alien"><span class="specialDescription">Alien</span></p> 
                         <img src="Images/AlienImages/Alien1.jpg" alt="Button for viewing Alien Animals">
                         <div>
                             <h2 style="width:650px"></h2>
@@ -111,26 +114,30 @@
                         <div class="grid-container-store">    
                                 <div class="item">
                                     <img src="Images/AlienImages/Alien2.jpg" alt = "generated picture 1" aria-colspan="1">
-                                    <p class="storeP">Price: 12 Btc</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <p class="storeP"><span class="specialDescription">The Zyphorax</span> <br> A shimmering, multi-limbed being that glides through the atmosphere of its home planet, absorbing energy from the stars.</p>
+                                    <p class="storeP">Price: 4 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <div class="item">
                                     <img src="Images/AlienImages/Alien3.jpg" alt = "generated picture 2">
+                                    <p class="storeP"><span class="specialDescription">The Glorbix</span>A gelatinous, color-changing organism that communicates through bioluminescent patterns and can reshape itself to fit into various environments.</p>
                                     <p class="storeP">Price: 14 Btc</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <div class="item">
                                     <img src="Images/AlienImages/Alien4.png" alt = "generated picture 3">
-                                    <p class="storeP">Price: 12 Eth</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <p class="storeP"><span class="specialDescription"> The Thraxillion</span>An entity that grows in the gaseous layers of its planet, using its mouth to capture cosmic particles for nourishment.</p>
+                                    <p class="storeP">Price: 2 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <div class="item">
                                     <img src="Images/AlienImages/Alien5.png" alt = "generated picture 4">
+                                    <p class="storeP"><span class="specialDescription"> The Xelthara</span>A towering, insectoid creature with a crystalline exoskeleton, known for its piercing vocalizations and ability to manipulate sound waves.</p>
                                     <p class="storeP">Price: 2 Btc</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <!--Need to add listeners in JS file-->
@@ -141,13 +148,14 @@
                                 </div>
                                 <div class="item" style="width: 200%; display: none;"> <!--This is the ai generated image, dispalay is none so it is hidden, Once generated, will become visible-->
                                     <img id="generated2" src="" alt = "generated picture 4" style="display: inline;">
-                                    <p class="storeP" style="display:block">Price: 2 Btc</p>
-                                    <p id="generatedText2" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
+                                    <p id="generatedText2" style="display: block;" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
+                                    <p class="storeP" style="display:block;">Price: 2 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
                         </div>
                     </div>
                 <div class="item">
-                    <p id="Stolen">Stolen</p> 
+                    <p id="Stolen"><span class="specialDescription">Stolen</span></p> 
                     <!--Stolen category-->
                     <img src="Images/StolenImages/Stolen.jpg" alt="Button for viewing Stolen Animals">
                     <div>
@@ -157,26 +165,30 @@
                     <div class="grid-container-store">    
                             <div class="item">
                                 <img src="Images/StolenImages/Stolen2.jpg" alt = "generated picture 1" aria-colspan="1">
-                                <p class="storeP">Price: 12 Btc</p>
-                                <p class="storeP">This animal is crazy.</p>
+                                <p class="storeP"><span class="specialDescription">Steve Irwin's Crocodile</span>We managed to extract this animal from his Zoo in Miami, Florida.</p>
+                                <p class="storeP">Price: 2 Btc</p>
+                                <button class="addToCartBtn">Add to Cart</button>
                             </div>
 
                             <div class="item">
                                 <img src="Images/StolenImages/Stolen3.jpg" alt = "generated picture 2">
-                                <p class="storeP">Price: 14 Btc</p>
-                                <p class="storeP">This animal is crazy.</p>
+                                <p class="storeP"><span class="specialDescription">Captain Jack Sparrow's Kraken</span>This animal needed sedation and is currently held in a maximum security aquarium.</p>
+                                <p class="storeP">Price: 25 Btc</p>
+                                <button class="addToCartBtn">Add to Cart</button>
                             </div>
 
                             <div class="item">
                                 <img src="Images/StolenImages/Stolen4.webp" alt = "generated picture 3">
-                                <p class="storeP">Price: 12 Eth</p>
-                                <p class="storeP">This animal is crazy.</p>
+                                <p class="storeP"><span class="specialDescription">Dorothy's pet dog Toto</span>This dog has an infinite lifespan due to its time in Oz.</p>
+                                <p class="storeP">Price: 1 Btc</p>
+                                <button class="addToCartBtn">Add to Cart</button>
                             </div>
 
                             <div class="item">
                                 <img src="Images/StolenImages/Stolen5.jpg" alt = "generated picture 4">
-                                <p class="storeP">Price: 2 Btc</p>
-                                <p class="storeP">This animal is crazy.</p>
+                                <p class="storeP"><span class="specialDescription">Dobby the House Elf</span>This house elf is obedient and is great for transportation.</p>
+                                <p class="storeP">Price: 9 Btc</p>
+                                <button class="addToCartBtn">Add to Cart</button>
                             </div>
 
                             <!--Need to add listeners in JS file-->
@@ -187,13 +199,14 @@
                             </div>
                             <div class="item" style="width: 200%; display: none;"> <!--This is the ai generated image, dispalay is none so it is hidden, Once generated, will become visible-->
                                 <img id="generated3" src="" alt = "generated picture 4" style="display: inline;">
-                                <p class="storeP" style="display:block">Price: 2 Btc</p>
-                                <p id="generatedText3" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
+                                    <p id="generatedText3" style="display: block;" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
+                                    <p class="storeP" style="display:block;">Price: 2 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                             </div>
                     </div>
                 </div>
                 <div class="item">
-                        <p id="Extinct">Extinct</p> 
+                        <p id="Extinct"><span class="specialDescription">Extinct</span></p> 
                         <!--Extinct category-->
                         <img src="Images/ExtinctImages/Extinct.jpg" alt="Button for viewing Extinct Animals">
                         <div>
@@ -203,26 +216,30 @@
                         <div class="grid-container-store">    
                                 <div class="item">
                                     <img src="Images/ExtinctImages/Extinct2.jpg" alt = "generated picture 1" aria-colspan="1">
-                                    <p class="storeP">Price: 12 Btc</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <p class="storeP"><span class="specialDescription">Deathclaw</span>This extinct creature was so deadly that it slaughtered all of its prey which lead itself to extinction. This killing machine will destroy nations and armies with its knife like claws and defend with its bulletproof armor.</p>
+                                    <p class="storeP">Price: 30 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <div class="item">
                                     <img src="Images/ExtinctImages/Extinct3.jpg" alt = "generated picture 2">
+                                    <p class="storeP"><span class="specialDescription">Carnosaur</span>This animal is a ruler among dinosaurs. This makes for a great resource in battle.</p>
                                     <p class="storeP">Price: 14 Btc</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <div class="item">
                                     <img src="Images/ExtinctImages/Extinct4.jpg" alt = "generated picture 3">
-                                    <p class="storeP">Price: 12 Eth</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <p class="storeP"><span class="specialDescription">Dodo</span>This is a Dodo.</p>
+                                    <p class="storeP">Price: 1 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <div class="item">
                                     <img src="Images/ExtinctImages/Extinct5.jpg" alt = "generated picture 4">
+                                    <p class="storeP"><span class="specialDescription">Pteranodon</span>This dinosaur is a personal flying machine that is also good for delivering supplies.</p>
                                     <p class="storeP">Price: 2 Btc</p>
-                                    <p class="storeP">This animal is crazy.</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                                 </div>
 
                                 <!--Need to add listeners in JS file-->
@@ -232,9 +249,10 @@
                                 <button id="generateButton4" style = "width:100%; ;height:50px; color: black; background-color: gray; display: inline-block; font-size: large; margin-bottom: 100dp;" >Load More</button>
                             </div>
                             <div class="item" style="width: 200%; display: none;"> <!--This is the ai generated image, dispalay is none so it is hidden, Once generated, will become visible-->
-                                <img id="generated4" src="" alt = "generated picture 4" style="display: inline-block;">
-                                <p class="storeP" style="display:block">Price: 2 Btc</p>
-                                <p id="generatedText4" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
+                                <img id="generated4" src="" alt = "generated picture 4" style="display: inline;">
+                                    <p id="generatedText4" style="display: block;" class="storeP">This animal is crazy.</p> <!--This text will be ai generated once the picture completes. Will add loading sign later-->
+                                    <p class="storeP" style="display:block;">Price: 2 Btc</p>
+                                    <button class="addToCartBtn">Add to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -249,6 +267,7 @@
 <!--This footer has a button to get to the top fast and a filler text-->
     <footer>
         <a href="">TOP</a>
+        <!--Add a security logo-->
         <p>Secured by Animalia Marketplace</p>
     </footer>
 
