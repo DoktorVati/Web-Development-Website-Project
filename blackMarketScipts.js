@@ -27,7 +27,28 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
         webhook: null,
         track_id: null
     };
-
+    switch (value) {
+        case 2:
+            document.getElementById('generateButton2').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
+            document.getElementById('generateButtonClass2').style.display="none";
+    
+            break;
+        case 3:
+            document.getElementById('generateButton3').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
+            document.getElementById('generateButtonClass3').style.display="none";
+            
+            break;
+        case 4:
+            document.getElementById('generateButton4').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
+            document.getElementById('generateButtonClass4').style.display="none";
+            
+            break;
+        default:
+            document.getElementById('generateButton1').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
+            document.getElementById('generateButtonClass').style.display="none";
+            
+            break;
+    }
     // In case it fails, I surrounded it in a try and catch
     try {  
         const response = await fetch(url, {
@@ -42,6 +63,7 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
             const data = await response.json();
             console.log(data); // I Log the entire response so that I can use it for debugging
 
+            
             switch (value) {
                 case 2:
                     document.getElementById('generateButton2').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
@@ -64,7 +86,6 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
                     
                     break;
             }
-
             // Access the output array and get the first image URL
             if (data.output && data.output.length > 0) {
                 // Get the image URL from the output array
@@ -85,6 +106,28 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
             } else {
                 console.error("Image not found in the response.", data); // Error
                 alert("Unable to generate image. Please try again."); // 
+                switch (value) {
+                    case 2:
+                        document.getElementById('generateButton2').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
+                        document.getElementById('generateButtonClass2').style.display="block";
+                
+                        break;
+                    case 3:
+                        document.getElementById('generateButton3').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
+                        document.getElementById('generateButtonClass3').style.display="block";
+                        
+                        break;
+                    case 4:
+                        document.getElementById('generateButton4').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
+                        document.getElementById('generateButtonClass4').style.display="block";
+                        
+                        break;
+                    default:
+                        document.getElementById('generateButton1').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
+                        document.getElementById('generateButtonClass').style.display="block";
+                        
+                        break;
+                }
             }
         } else {
             throw new Error(response.statusText);
