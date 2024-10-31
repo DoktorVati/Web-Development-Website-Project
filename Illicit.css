@@ -311,3 +311,67 @@ footer{
 .paymentContainer {
     margin-bottom: 200px;
 }
+
+.totalCost {
+    background-color: #c5a2f5; /* Light background */
+    border: 1px solid #ca79f3; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 20px; /* Padding for spacing */
+    margin-top: 20px; /* Space above the total cost */
+    text-align: center; /* Center text */
+}
+
+.totalCost h2 {
+    font-size: 24px; /* Heading size */
+    margin-bottom: 10px; /* Space below heading */
+    color: #333; /* Dark text color */
+}
+
+.totalCost .amount {
+    font-weight: bold; /* Bold text */
+    color: #0e5bae; /* Blue color for emphasis */
+}
+
+.container {
+    max-width: 1200px; 
+    margin: 20px auto; /* Center the container */
+    padding: 20px; /* Add padding */
+    background-color: #bd92bb; 
+    border: 3px solid #8a4790; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.checkout-button {
+    display: inline-block; /* Make it a block element */
+    padding: 10px 20px; /* Padding for the button */
+    background-color: #007BFF; /* Button color */
+    color: rgb(97, 36, 116); /* Text color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.checkout-button:hover {
+    background-color: #0056b3; /* Darker shade */
+    transform: translateY(-3px); /* Move the button up */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+
+.total {
+    font-size: 20px; /* Larger font for total cost */
+    font-weight: bold; /* Bold text */
+    margin-top: 20px; /* Space above total */
+    text-align: center; /* Center the total text */
+}
+
+
+
+
+
+
+
+
+
+

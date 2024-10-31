@@ -228,7 +228,10 @@ function displayCart() {
 
     let totalCost = 0;
     cartItemsContainer.innerHTML = ''; // Clear previous content
-
+    if (cartItems.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>'; // Message for empty cart
+        return; // Exit the function early
+    }
     const itemCounts = {};
 
     cartItems.forEach(item => {
@@ -269,7 +272,12 @@ function displayCart() {
         totalCost += item.price * quantity; // Calculate total cost using quantity
     }
 
-    totalCostContainer.innerHTML = `Total Cost: ${totalCost.toFixed(2)} Bitcoin`;
+    totalCostContainer.innerHTML = `
+    <div class="totalCost">
+        <h2>Total Cost</h2>
+        <p class="amount">${totalCost.toFixed(2)} BTC</p>
+    </div>
+`;
     
     // Payment form
     paymentContainer.innerHTML = `
