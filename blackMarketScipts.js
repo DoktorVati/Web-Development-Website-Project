@@ -215,33 +215,36 @@ if (window.location.pathname.includes('BlackMarketStock.html')) {
 
 // Load cart data from local storage on page load
 let cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // Retrieve items from local storage
-let cartCount = cartItems.length; // Count of items in cart
+let cartCount = cartItems.length; 
 
 // Update the displayed cart count
 document.getElementById('itemsInCart').textContent = cartCount;
 
-// Function to display cart items, total cost, and payment option
+// Function to display the  cart items, total cost, and payment option
 function displayCart() {
     const cartItemsContainer = document.getElementById("cartItems");
     const totalCostContainer = document.getElementById("totalCost");
     const paymentContainer = document.getElementById("paymentContainer");
 
     let totalCost = 0;
-    cartItemsContainer.innerHTML = ''; // Clear previous content
+    cartItemsContainer.innerHTML = ''; 
+
+    // Inform the user that their cart is empty
     if (cartItems.length === 0) {
         cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>'; // Message for empty cart
-        return; // Exit the function early
+        return; 
     }
     const itemCounts = {};
 
+    // Create a key for each item to better keep track
     cartItems.forEach(item => {
-        const key = `${item.name}-${item.price}`; // Unique key for each item
-        itemCounts[key] = (itemCounts[key] || 0) + 1; // Increment count
+        const key = `${item.name}-${item.price}`; 
+        itemCounts[key] = (itemCounts[key] || 0) + 1; 
     });
 
     for (const [key, quantity] of Object.entries(itemCounts)) {
         const [name, price] = key.split('-');
-        const item = cartItems.find(i => i.name === name); // Find original item
+        const item = cartItems.find(i => i.name === name); 
 
         const itemDiv = document.createElement("div");
         itemDiv.classList.add("item");
@@ -249,6 +252,7 @@ function displayCart() {
         // Calculate total cost for this item
         const itemTotalCost = (price * quantity).toFixed(2);
 
+        // This builds the items in the cart
         itemDiv.innerHTML = `
     <div class="storeP" style="display: flex; align-items: center; justify-content: space-between;">
         <img src="${item.image}" alt="${item.name}" style="width: 100px; height: auto; margin-right: 10px;">
@@ -269,7 +273,8 @@ function displayCart() {
 
     
         cartItemsContainer.appendChild(itemDiv);
-        totalCost += item.price * quantity; // Calculate total cost using quantity
+         // Calculate total cost for item  using quantity
+        totalCost += item.price * quantity;
     }
 
     totalCostContainer.innerHTML = `
@@ -291,9 +296,12 @@ function displayCart() {
         const walletAddress = document.getElementById('walletAddress').value;
         
         // Validate wallet address length (Bitcoin addresses are usually 26-35 characters)
+        // I included an example wallet that you can copy and paste for testing
+
+        // Clears the cart after payment.
         if (walletAddress.length >= 26 && walletAddress.length <= 35) {
             alert(`Payment of ${totalCost.toFixed(2)} Bitcoin will be sent to our wallet at g7KjZy3LqV8uH2rM9wTdQ4XfRzKpN5sF from your wallet address ${walletAddress}`);
-            clearCart(); // Clear the cart after payment is confirmed
+            clearCart(); 
         } else {
             alert('Please enter a valid wallet address (26-35 characters).');
         }
@@ -302,9 +310,9 @@ function displayCart() {
     // Add event listeners for remove buttons
     document.querySelectorAll('.removeBtn').forEach(button => {
         button.addEventListener('click', function() {
-            const name = this.getAttribute('data-name'); // Get name from data attribute
-            const price = parseFloat(this.getAttribute('data-price')); // Get price from data attribute
-            removeFromCart(name, price); // Call remove function
+            const name = this.getAttribute('data-name'); 
+            const price = parseFloat(this.getAttribute('data-price'));
+            removeFromCart(name, price);
         });
     });
     
@@ -314,131 +322,125 @@ function displayCart() {
 document.querySelectorAll('.quantityText').forEach(quantityField => {
     quantityField.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent newline
-            this.blur(); // Remove focus to trigger blur event
+            event.preventDefault(); 
+            this.blur(); 
         }
     });
 
     quantityField.addEventListener('blur', function() {
         const newQuantity = parseInt(this.textContent.trim(), 10);
-        const name = this.getAttribute('data-name'); // Get name from data attribute
-        const price = parseFloat(this.getAttribute('data-price')); // Get price from data attribute
+        const name = this.getAttribute('data-name'); /
+        const price = parseFloat(this.getAttribute('data-price'));
 
-        // Validate newQuantity
+        // Validates the  newQuantity to ensure number is entered between 0 and 100
         if (!isNaN(newQuantity) && newQuantity >= 0 && newQuantity <= 100) {
             updateQuantity(name, price, newQuantity);
         } else {
             alert('Please enter a valid quantity between 0 and 100.');
-            this.textContent = '1'; // Reset to 1 if invalid
+            this.textContent = '1'; // Resets to 1 if an  invalid amount is entered
         }
     });
 });
 
 }
 
-// Function to remove item from cart entirely
+// Function to remove item from cart entirely by removing info from storage and decreasing quanity and cost
 function removeFromCart(name, price) {
-    cartItems = cartItems.filter(item => !(item.name === name && item.price === price)); // Remove all quantities
-    localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
-    cartCount = cartItems.length; // Update cart count
-    document.getElementById('itemsInCart').textContent = cartCount; // Update displayed count
-    displayCart(); // Refresh the cart display
+    cartItems = cartItems.filter(item => !(item.name === name && item.price === price)); 
+    localStorage.setItem('cartItems', JSON.stringify(cartItems)); 
+    cartCount = cartItems.length; 
+    document.getElementById('itemsInCart').textContent = cartCount; 
+    displayCart();
 }
 
-// Function to update item quantity
+// Function to update the item quantity
 function updateQuantity(name, price, newQuantity) {
-    // Find the item index
+    // Find the items index
     const itemIndex = cartItems.findIndex(item => item.name === name && item.price === price);
     
     if (itemIndex !== -1) {
-        // If new quantity is 0 or less, remove the item from cart
+        // If new quantity is 0 or less it will remove the item from the cart
         if (newQuantity <= 0) {
             removeFromCart(name, price);
         } else {
             const currentItem = cartItems[itemIndex];
-            // Update the quantity in the cart based on the newQuantity
+            // Updates the quantity in the cart based on the newQuantity
             const currentCount = cartItems.filter(item => item.name === name && item.price === price).length;
 
-            // Update the cart
+            // Updates the cart quantity
             if (newQuantity > currentCount) {
-                // Add items back to the cart
+                // Adds items back to the cart
                 for (let i = 0; i < (newQuantity - currentCount); i++) {
                     addToCart(currentItem.name, currentItem.price, currentItem.image, currentItem.description);
                 }
             } else if (newQuantity < currentCount) {
-                // Remove items from the cart
+                // Removes items from the cart
                 for (let i = 0; i < (currentCount - newQuantity); i++) {
                     removeOneFromCart(currentItem.name, currentItem.price);
                 }
             }
         }
     }
-
-    displayCart(); // Refresh the cart display after updating quantity
+    // displays the cart
+    displayCart(); 
 }
 
-// Function to remove one item from cart
+// Function to remove one item from a cart, this is used repeatedly when they change the quantity
 function removeOneFromCart(name, price) {
-    const index = cartItems.findIndex(item => item.name === name && item.price === price); // Find the item
+    const index = cartItems.findIndex(item => item.name === name && item.price === price); 
     if (index !== -1) {
-        cartItems.splice(index, 1); // Remove one instance of the item
-        localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
-        cartCount = cartItems.length; // Update cart count
-        document.getElementById('itemsInCart').textContent = cartCount; // Update displayed count
-        displayCart(); // Refresh the cart display
+        cartItems.splice(index, 1); 
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        cartCount = cartItems.length; 
+        document.getElementById('itemsInCart').textContent = cartCount; 
+        displayCart(); 
     }
 }
 
-// Function to clear the cart
+// Function to clear the cart and thank them for the purchase
+// Resets info in storage
 function clearCart() {
-    cartItems = []; // Reset cart items array
-    localStorage.removeItem('cartItems'); // Clear items from local storage
-    cartCount = 0; // Reset count
-    document.getElementById('itemsInCart').textContent = cartCount; // Update displayed count
-    document.getElementById("cartItems").innerHTML = ''; // Clear cart display
-    document.getElementById("totalCost").innerHTML = ''; // Clear total cost display
-    document.getElementById("paymentContainer").innerHTML = ''; // Clear payment form
-    alert('Thank you for your payment! Your cart has been cleared.'); // Confirmation message
+    cartItems = []; 
+    localStorage.removeItem('cartItems'); 
+    cartCount = 0; 
+    document.getElementById('itemsInCart').textContent = cartCount; 
+    document.getElementById("cartItems").innerHTML = ''; 
+    document.getElementById("totalCost").innerHTML = ''; 
+    document.getElementById("paymentContainer").innerHTML = ''; 
+    alert('Thank you for your payment! Your cart has been cleared.'); 
 }
 
-// Function to add item to cart
+// Function to add item to cart and change the local storage array of info
 function addToCart(name, price, image) {
-    cartItems.push({ name, price, image }); // Include description
-    localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
-    cartCount = cartItems.length; // Update cart count
-    document.getElementById('itemsInCart').textContent = cartCount; // Display updated count
-    console.log(`Added to cart: ${name} - ${price}`); // For debugging
+    cartItems.push({ name, price, image }); 
+    localStorage.setItem('cartItems', JSON.stringify(cartItems)); 
+    cartCount = cartItems.length; 
+    document.getElementById('itemsInCart').textContent = cartCount; 
+    console.log(`Added to cart: ${name} - ${price}`);
 }
 
-// Attach event listeners to "Add to Cart" buttons
+// Attaches event listeners to the Add to Cart buttons and copy info from each item
 document.querySelectorAll('.addToCartBtn').forEach(button => {
     button.addEventListener('click', function() {
         const name = this.parentElement.querySelector('.specialDescription').textContent; // Get item name
         
-        // Get description by targeting the text node after the <br>
-        const descriptionParagraph = this.parentElement.querySelector('.storeP');
+        const priceText = this.parentElement.querySelectorAll('.storeP')[1].textContent; // Gets the price text
+        const price = parseFloat(priceText.split(': ')[1]); // Extracts price from each image
+        const image = this.parentElement.querySelector('img').src; 
         
-        const priceText = this.parentElement.querySelectorAll('.storeP')[1].textContent; // Get price text
-        const price = parseFloat(priceText.split(': ')[1]); // Extract price
-        const image = this.parentElement.querySelector('img').src; // Get item image
-        
-        addToCart(name, price, image); // Call add to cart function
+        addToCart(name, price, image); 
     });
 });
 
-// Check if the current page is the cart page and display items
+// Checks if the current page is the cart page and displays  the items
 if (window.location.pathname.includes('BlackMarketCart.html')) {
-    window.onload = displayCart; // Display cart items when the page loads
+    window.onload = displayCart; 
 }
 
 
 
-
-
-
-
 function showPopup() {
-    // Define an array of messages
+    // These are the messages that can be generated
     const messages = [
         "Your IP is being leaked! (This is a popup for BlackMarketAnimalia)",
         "Download Free RAM Now!",
@@ -453,14 +455,14 @@ function showPopup() {
     // Select a random message from the array
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
-    // Ensure popups don't go off-screen
+    // places popups in random spots on the screen
     let left = Math.min(Math.floor(Math.random() * (window.innerWidth - 550)), window.innerWidth - 550);
     let top = Math.min(Math.floor(Math.random() * (window.innerHeight - 400)), window.innerHeight - 400);
 
     // Open a new window at the random position
     let myWindow = window.open("", "", `width=450,height=300,left=${left},top=${top}`);
     
-    // Create the popup content
+    // Creates the popup content in each virus
     myWindow.document.writeln(`
         <html>
         <head>
@@ -504,16 +506,16 @@ function showPopup() {
         </body>
         </html>
     `);
-    myWindow.document.close(); // Close the document stream
+    myWindow.document.close(); 
 
     // Schedule the next popup
     randomPopup();
 }
 
 function randomPopup() {
-    // Generate a random time between 20 and 60 seconds (20000 to 60000 milliseconds)
-    const minTime = 20000; // 20 seconds
-    const maxTime = 60000; // 60 seconds
+    // Generates a random time between 20 and 60 seconds for a popup
+    const minTime = 20000;
+    const maxTime = 60000; 
     const randomTime = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
 
     // Set a timeout to show the popup
@@ -523,4 +525,4 @@ function randomPopup() {
 
 // Call the randomPopup function on window load
 // Enable for build
-//window.onload = randomPopup;
+window.onload = randomPopup;

@@ -313,29 +313,29 @@ footer{
 }
 
 .totalCost {
-    background-color: #c5a2f5; /* Light background */
-    border: 1px solid #ca79f3; /* Light border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 20px; /* Padding for spacing */
-    margin-top: 20px; /* Space above the total cost */
-    text-align: center; /* Center text */
+    background-color: #c5a2f5; 
+    border: 1px solid #ca79f3; 
+    border-radius: 5px; 
+    padding: 20px; 
+    margin-top: 20px; 
+    text-align: center; 
 }
 
 .totalCost h2 {
-    font-size: 24px; /* Heading size */
-    margin-bottom: 10px; /* Space below heading */
-    color: #333; /* Dark text color */
+    font-size: 24px; 
+    margin-bottom: 10px; 
+    color: #333; 
 }
 
 .totalCost .amount {
-    font-weight: bold; /* Bold text */
-    color: #0e5bae; /* Blue color for emphasis */
+    font-weight: bold;
+    color: #0e5bae; 
 }
 
 .container {
     max-width: 1200px; 
-    margin: 20px auto; /* Center the container */
-    padding: 20px; /* Add padding */
+    margin: 20px auto; 
+    padding: 20px; 
     background-color: #bd92bb; 
     border: 3px solid #8a4790; 
     border-radius: 8px; 
@@ -343,27 +343,27 @@ footer{
 }
 
 .checkout-button {
-    display: inline-block; /* Make it a block element */
-    padding: 10px 20px; /* Padding for the button */
-    background-color: #007BFF; /* Button color */
-    color: rgb(97, 36, 116); /* Text color */
-    text-decoration: none; /* Remove underline */
-    border-radius: 5px; /* Rounded corners */
+    display: inline-block; 
+    padding: 10px 20px;
+    background-color: #007BFF; 
+    color: rgb(97, 36, 116); 
+    text-decoration: none;
+    border-radius: 5px; 
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transition */
 }
 
 .checkout-button:hover {
-    background-color: #0056b3; /* Darker shade */
-    transform: translateY(-3px); /* Move the button up */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    background-color: #0056b3; 
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 
 .total {
-    font-size: 20px; /* Larger font for total cost */
-    font-weight: bold; /* Bold text */
-    margin-top: 20px; /* Space above total */
-    text-align: center; /* Center the total text */
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-top: 20px; 
+    text-align: center;
 }
 
 
