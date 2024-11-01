@@ -141,7 +141,7 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
     }
     
     // Call to generate text after the image generation attempt
-    //generateText(value);
+    generateText(value);
 }
 
 // Function for generating the AI text for the image. 
