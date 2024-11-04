@@ -329,7 +329,7 @@ document.querySelectorAll('.quantityText').forEach(quantityField => {
 
     quantityField.addEventListener('blur', function() {
         const newQuantity = parseInt(this.textContent.trim(), 10);
-        const name = this.getAttribute('data-name'); /
+        const name = this.getAttribute('data-name'); 
         const price = parseFloat(this.getAttribute('data-price'));
 
         // Validates the  newQuantity to ensure number is entered between 0 and 100
@@ -432,15 +432,17 @@ document.querySelectorAll('.addToCartBtn').forEach(button => {
     });
 });
 
-// Checks if the current page is the cart page and displays  the items
-if (window.location.pathname.includes('BlackMarketCart.html')) {
-    window.onload = displayCart; 
+
+function handleWindowLoad() {
+    if (window.location.pathname.includes('BlackMarketCart.html')) {
+        displayCart(); // Call displayCart if on the cart page
+    }
+    // enable for final build
+    //randomPopup(); // Always call randomPopup
 }
 
 
-
 function showPopup() {
-    // These are the messages that can be generated
     const messages = [
         "Your IP is being leaked! (This is a popup for BlackMarketAnimalia)",
         "Download Free RAM Now!",
@@ -452,77 +454,71 @@ function showPopup() {
         "Immediate action required: malware found! (This is a popup for BlackMarketAnimalia)"
     ];
 
-    // Select a random message from the array
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-
-    // places popups in random spots on the screen
     let left = Math.min(Math.floor(Math.random() * (window.innerWidth - 550)), window.innerWidth - 550);
     let top = Math.min(Math.floor(Math.random() * (window.innerHeight - 400)), window.innerHeight - 400);
 
-    // Open a new window at the random position
     let myWindow = window.open("", "", `width=450,height=300,left=${left},top=${top}`);
     
-    // Creates the popup content in each virus
-    myWindow.document.writeln(`
-        <html>
-        <head>
-            <title>Alert</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f8d7da;
-                    color: #721c24;
-                    text-align: center;
-                    padding: 20px;
-                }
-                h1 {
-                    color: #d9534f;
-                }
-                p {
-                    font-size: 16px;
-                    margin-top: 10px;
-                }
-                .button {
-                    background-color: #d9534f;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                    padding: 10px 15px;
-                    cursor: pointer;
-                    font-size: 16px;
-                    margin-top: 15px;
-                    transition: background-color 0.3s ease;
-                }
-                .button:hover {
-                    background-color: #c9302c;
-                }
-            </style>
-        </head>
-        <body>
-            <h1>Warning!</h1>
-            <p>${randomMessage}</p>
-            <p>Please take immediate action!</p>
-            <button class="button" onclick="window.close()">DOWNLOAD</button>
-        </body>
-        </html>
-    `);
-    myWindow.document.close(); 
+    if (myWindow) { // Check if the window was successfully opened
+        myWindow.document.writeln(`
+            <html>
+            <head>
+                <title>Alert</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f8d7da;
+                        color: #721c24;
+                        text-align: center;
+                        padding: 20px;
+                    }
+                    h1 {
+                        color: #d9534f;
+                    }
+                    p {
+                        font-size: 16px;
+                        margin-top: 10px;
+                    }
+                    .button {
+                        background-color: #d9534f;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        padding: 10px 15px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        margin-top: 15px;
+                        transition: background-color 0.3s ease;
+                    }
+                    .button:hover {
+                        background-color: #c9302c;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Warning!</h1>
+                <p>${randomMessage}</p>
+                <p>Please take immediate action!</p>
+                <button class="button" onclick="window.close()">CLOSE</button>
+            </body>
+            </html>
+        `);
+        myWindow.document.close();
+    } else {
+        console.error("Popup blocked or failed to open.");
+    }
 
-    // Schedule the next popup
     randomPopup();
 }
 
 function randomPopup() {
-    // Generates a random time between 20 and 60 seconds for a popup
     const minTime = 20000;
     const maxTime = 60000; 
     const randomTime = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
 
-    // Set a timeout to show the popup
     setTimeout(showPopup, randomTime);
 }
 
 
-// Call the randomPopup function on window load
-// Enable for build
-window.onload = randomPopup;
+window.onload = handleWindowLoad;
