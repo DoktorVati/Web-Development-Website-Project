@@ -286,19 +286,54 @@ function displayCart() {
     
     // Payment form
     paymentContainer.innerHTML = `
-        <label for="walletAddress">Wallet Address:</label>
-        <input type="text" id="walletAddress" placeholder="Enter your wallet address">
-        <button id="payButton">Pay Now</button>
-    `;
+    <h3>Shipping Address</h3>
+    <form id="shippingForm">
+        <label for="address">Street Address:</label><br>
+        <input type="text" id="address" name="address" placeholder="123 Main St" required><br><br>
 
-    // Event listener for payment button
-    document.getElementById('payButton').addEventListener('click', () => {
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" placeholder="Miami" required><br><br>
+
+        <label for="state">State/Province:</label><br>
+        <input type="text" id="state" name="state" placeholder="Florida" required><br><br>
+
+        <label for="zip">Zip/Postal Code:</label><br>
+        <input type="text" id="zip" name="zip" placeholder="90001" required><br><br>
+
+        <label for="country">Country:</label><br>
+        <input type="text" id="country" name="country" placeholder="United State" required><br><br>
+
+        <label for="walletAddress">Wallet Address:</label><br>
+        <input type="text" id="walletAddress" name="walletAddress" placeholder="Enter your wallet address" required><br><br>
+
+        <input type="submit" value="Submit Address">
+    </form>
+`;
+
+     // Event listener for the form submission
+     document.getElementById('shippingForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Check if the shipping address form is filled
+        const shippingForm = document.getElementById('shippingForm');
+        const addressFields = shippingForm.querySelectorAll('input[type="text"]');
+        let isAddressComplete = true;
+
+        // Check if any address field is empty
+        addressFields.forEach(field => {
+            if (!field.value.trim()) {
+                isAddressComplete = false;
+            }
+        });
+
+        if (!isAddressComplete) {
+            alert('Please complete the shipping address before proceeding with payment.');
+            return; // Prevent proceeding to payment
+        }
+
         const walletAddress = document.getElementById('walletAddress').value;
-        
-        // Validate wallet address length (Bitcoin addresses are usually 26-35 characters)
-        // I included an example wallet that you can copy and paste for testing
 
-        // Clears the cart after payment.
+        // Validate wallet address length (Bitcoin addresses are usually 26-35 characters)
         if (walletAddress.length >= 26 && walletAddress.length <= 35) {
             alert(`Payment of ${totalCost.toFixed(2)} Bitcoin will be sent to our wallet at g7KjZy3LqV8uH2rM9wTdQ4XfRzKpN5sF from your wallet address ${walletAddress}`);
             clearCart(); 
@@ -407,7 +442,7 @@ function clearCart() {
     document.getElementById("cartItems").innerHTML = ''; 
     document.getElementById("totalCost").innerHTML = ''; 
     document.getElementById("paymentContainer").innerHTML = ''; 
-    alert('Thank you for your payment! Your cart has been cleared.'); 
+    alert('Thank you for your purchase! Your shipment will arrive in 7-14 days'); 
 }
 
 // Function to add item to cart and change the local storage array of info
@@ -445,8 +480,8 @@ function handleWindowLoad() {
 function showPopup() {
     const messages = [
         "Your IP is being leaked! (This is a popup for BlackMarketAnimalia)",
-        "Download Free RAM Now!",
-        "$$$$$$Want to get free Cash? Visit freecash.com now! $$$$$",
+        "Download Free RAM Now! (This is a popup for BlackMarketAnimalia)",
+        "$$$$$$Want to get free Cash? Visit freecash.com now! $$$$$ (This is a popup for BlackMarketAnimalia)",
         "You are being hacked! (This is a popup for BlackMarketAnimalia)",
         "Virus detected! (This is a popup for BlackMarketAnimalia)",
         "Suspicious activity detected on your device! (This is a popup for BlackMarketAnimalia)",
