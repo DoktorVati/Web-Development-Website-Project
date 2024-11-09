@@ -473,7 +473,7 @@ function handleWindowLoad() {
         displayCart(); // Call displayCart if on the cart page
     }
     // enable for final build
-    //randomPopup(); // Always call randomPopup
+    randomPopup(); 
 }
 
 
