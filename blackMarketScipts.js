@@ -286,28 +286,45 @@ function displayCart() {
     
     // Payment form
     paymentContainer.innerHTML = `
+    <!-- Payment form -->
+<div id="paymentContainer">
     <h3>Shipping Address</h3>
     <form id="shippingForm">
-        <label for="address">Street Address:</label><br>
-        <input type="text" id="address" name="address" placeholder="123 Main St" required><br><br>
+        <div class="form-group">
+            <label for="address">Street Address:</label>
+            <input type="text" id="address" name="address" placeholder="123 Main St" required>
+        </div>
 
-        <label for="city">City:</label><br>
-        <input type="text" id="city" name="city" placeholder="Miami" required><br><br>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" placeholder="Miami" required>
+        </div>
 
-        <label for="state">State/Province:</label><br>
-        <input type="text" id="state" name="state" placeholder="Florida" required><br><br>
+        <div class="form-group">
+            <label for="state">State/Province:</label>
+            <input type="text" id="state" name="state" placeholder="Florida" required>
+        </div>
 
-        <label for="zip">Zip/Postal Code:</label><br>
-        <input type="text" id="zip" name="zip" placeholder="90001" required><br><br>
+        <div class="form-group">
+            <label for="zip">Zip/Postal Code:</label>
+            <input type="text" id="zip" name="zip" placeholder="90001" required>
+        </div>
 
-        <label for="country">Country:</label><br>
-        <input type="text" id="country" name="country" placeholder="United State" required><br><br>
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" placeholder="United States" required>
+        </div>
 
-        <label for="walletAddress">Wallet Address:</label><br>
-        <input type="text" id="walletAddress" name="walletAddress" placeholder="Enter your wallet address" required><br><br>
+        <div class="form-group">
+            <label for="walletAddress">Wallet Address:</label>
+            <input type="text" id="walletAddress" name="walletAddress" placeholder="Enter your wallet address" required>
+        </div>
 
-        <input type="submit" value="Submit Address">
+        <div class="form-group">
+            <input type="submit" value="Submit Address" class="btn-submit">
+        </div>
     </form>
+</div>
 `;
 
      // Event listener for the form submission
