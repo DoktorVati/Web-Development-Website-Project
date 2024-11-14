@@ -31,21 +31,22 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
         case 2:
             document.getElementById('generateButton2').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
             document.getElementById('generateButtonClass2').style.display="none";
-    
+            document.getElementById("spinnerAlert2").style.display = "block";
             break;
         case 3:
             document.getElementById('generateButton3').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
             document.getElementById('generateButtonClass3').style.display="none";
-            
+            document.getElementById("spinnerAlert3").style.display = "block";
             break;
         case 4:
             document.getElementById('generateButton4').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
             document.getElementById('generateButtonClass4').style.display="none";
-            
+            document.getElementById("spinnerAlert4").style.display = "block";
             break;
         default:
             document.getElementById('generateButton1').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
             document.getElementById('generateButtonClass').style.display="none";
+            document.getElementById("spinnerAlert1").style.display = "block";
             
             break;
     }
@@ -68,22 +69,26 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
                 case 2:
                     document.getElementById('generateButton2').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
                     document.getElementById('generateButtonClass2').style.display="none";
-            
+                    document.getElementById("spinnerAlert2").style.display = "block";
+
                     break;
                 case 3:
                     document.getElementById('generateButton3').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
                     document.getElementById('generateButtonClass3').style.display="none";
-                    
+                    document.getElementById("spinnerAlert3").style.display = "block";
+
                     break;
                 case 4:
                     document.getElementById('generateButton4').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
                     document.getElementById('generateButtonClass4').style.display="none";
-                    
+                    document.getElementById("spinnerAlert4").style.display = "block";
+
                     break;
                 default:
                     document.getElementById('generateButton1').style.display="none"; // Hide the generate button image after click so that it doesn't cause more api calls 
                     document.getElementById('generateButtonClass').style.display="none";
-                    
+                    document.getElementById("spinnerAlert1").style.display = "block";
+
                     break;
             }
             // Access the output array and get the first image URL
@@ -104,28 +109,35 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
                 //buttonobject.style.display = 'none';
 
             } else {
-                console.error("Image not found in the response.", data); // Error
-                alert("Unable to generate image. Please try again."); // 
+                console.error("Image not found in the response."); // Error
+                alert("Unable to generate image. Please try again."); 
+                if (retries > 0) {
+                    await new Promise(res => setTimeout(res, delay)); // Wait for specified delay
+                    return generateImage(retries - 1, delay); // Retry the function
+                } 
                 switch (value) {
                     case 2:
                         document.getElementById('generateButton2').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
                         document.getElementById('generateButtonClass2').style.display="block";
-                
+                        document.getElementById("spinnerAlert2").style.display = "none";
                         break;
                     case 3:
                         document.getElementById('generateButton3').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
                         document.getElementById('generateButtonClass3').style.display="block";
-                        
+                        document.getElementById("spinnerAlert3").style.display = "none";
+
                         break;
                     case 4:
                         document.getElementById('generateButton4').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
                         document.getElementById('generateButtonClass4').style.display="block";
-                        
+                        document.getElementById("spinnerAlert4").style.display = "none";
+
                         break;
                     default:
                         document.getElementById('generateButton1').style.display="inline-block"; // Hide the generate button image after click so that it doesn't cause more api calls 
                         document.getElementById('generateButtonClass').style.display="block";
-                        
+                        document.getElementById("spinnerAlert1").style.display = "none";
+
                         break;
                 }
             }
@@ -139,13 +151,15 @@ async function generateImage(retries = 3, delay = 2000,value, prompted) {
             return generateImage(retries - 1, delay); // Retry the function
         } 
     }
-    
+    document.getElementById("spinnerAlert1").style.display = "none";
+    document.getElementById("spinnerAlert2").style.display = "none";
+    document.getElementById("spinnerAlert3").style.display = "none";
+    document.getElementById("spinnerAlert4").style.display = "none";
+
     // Call to generate text after the image generation attempt
     generateText(value);
 }
 
-// Function for generating the AI text for the image. 
-// It is set up similarly to the other API call
 async function generateText(value) {
     const url = 'https://contentai-net-text-generation.p.rapidapi.com/v1/text/blog-articles?category=short%20description%20of%20a%20crazy%20animal';
     const options = {
@@ -158,17 +172,16 @@ async function generateText(value) {
 
     try {
         const response = await fetch(url, options);
-        
+
         if (response.ok) {
-            const result = await response.json(); // Parse JSON response
-            
-            // Extract the text part starting from "text:"
+            const result = await response.json(); 
+
+            // Extract the text part starting from text:
             const text = result.text;
-            const startIndex = text.indexOf("text:") + 5; // Start after the chars "text:"
-            const textSubstring = text.substring(startIndex).trim(); // Extract substring
+            const startIndex = text.indexOf("text:") + 5; // Start after the chars text:
+            const textSubstring = text.substring(startIndex).trim(); // Extract the substring
 
             // Find the first two periods and cut the text there
-            // I do this because it has a title sometimes and this makes sure it is not shown.
             const firstPeriodIndex = textSubstring.indexOf('.') + 1; // First period
             const secondPeriodIndex = textSubstring.indexOf('.', firstPeriodIndex) + 1; // Second period
             const thirdPeriodIndex = textSubstring.indexOf('.', secondPeriodIndex) + 1; // Third period
@@ -176,12 +189,31 @@ async function generateText(value) {
             // Cut off after the second period
             const limitedText = thirdPeriodIndex !== -1 ? textSubstring.substring(firstPeriodIndex, thirdPeriodIndex).trim() : textSubstring;
 
-            console.log(limitedText); // Log the limited text for debugging
-            
-            // Update the paragraph with id 'generatedText1' with the processed text
+
+            // Get the generated text element using the dynamic value
             const generatedTextElement = document.getElementById('generatedText' + value);
-            generatedTextElement.textContent = limitedText; // Set the text content
-            generatedTextElement.style.display = 'block'; // Show the paragraph after generation
+
+            // Create a span element for the special description
+            const specialDescription = document.createElement('span');
+            specialDescription.className = 'specialDescription'; // Set the ID of the span
+            specialDescription.textContent = 'New Stock: ' + value; // Title of the new stock
+
+
+            // Clear any previous content
+            generatedTextElement.innerHTML = ''; 
+
+            // Append the span, line break, and the generated text
+            generatedTextElement.appendChild(specialDescription); // Add the span
+            generatedTextElement.appendChild(document.createTextNode(limitedText)); // Add the AI generated text
+
+            // Change the class of the paragraph to storeP after setting the content
+            generatedTextElement.className = 'storeP';
+
+            // Change the id to storeP after setting the content
+            generatedTextElement.id = 'storeP';
+
+            // Show the paragraph after generation
+            generatedTextElement.style.display = 'block'; 
         } else {
             console.error("Error fetching text:", response.statusText);
         }
@@ -190,26 +222,27 @@ async function generateText(value) {
     }
 }
 
+
+
+
+
+
 // Check if the current page is BlackMarketStock.html
 if (window.location.pathname.includes('BlackMarketStock.html')) {
     document.getElementById('generateButton1').addEventListener('click', () => {
-        generateImage(3, 2000, 1, "ultra realistic portrait of a bizarre, fantastical creature with exaggerated features, bad anatomy, bad proportions, wild colors, extra limbs, mutated features, large expressive eyes, mix of animals, hyper detail, 8K, RAW, unedited, symmetrical balance")
-            .then(() => textGeneration()); // Call text generation after image generation
+        generateImage(3, 2000, 1, "ultra realistic portrait of a bizarre, fantastical creature with exaggerated features, bad anatomy, bad proportions, wild colors, extra limbs, mutated features, large expressive eyes, mix of animals, hyper detail, 8K, RAW, unedited, symmetrical balance"); // Call text generation after image generation
     });
 
     document.getElementById('generateButton2').addEventListener('click', () => {
-        generateImage(3, 2000, 2, "ultra realistic portrait of an alien creature with alien features, bad anatomy, bad proportions, extra limbs, mutated features, large expressive eyes, hyper detail, 8K, RAW, unedited, symmetrical balance")
-            .then(() => textGeneration());
+        generateImage(3, 2000, 2, "ultra realistic portrait of an alien creature with alien features, bad anatomy, bad proportions, extra limbs, mutated features, large expressive eyes, hyper detail, 8K, RAW, unedited, symmetrical balance");
     });
 
     document.getElementById('generateButton3').addEventListener('click', () => {
-        generateImage(3, 2000, 3, "ultra realistic portrait of an animal, hyper detail, 8K, RAW, unedited, symmetrical balance")
-            .then(() => textGeneration());
+        generateImage(3, 2000, 3, "ultra realistic portrait of an animal, hyper detail, 8K, RAW, unedited, symmetrical balance");
     });
 
     document.getElementById('generateButton4').addEventListener('click', () => {
-        generateImage(3, 2000, 4, "ultra realistic portrait of a dinosaur, scary, hyper detail, 8K, RAW, unedited, symmetrical balance")
-            .then(() => textGeneration());
+        generateImage(3, 2000, 4, "ultra realistic portrait of a dinosaur, scary, hyper detail, 8K, RAW, unedited, symmetrical balance");
     });
 }
 
