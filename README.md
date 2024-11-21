@@ -3,4 +3,4 @@ It also includes Ai image and text generation using API calls.
 
 To use the website, 
 1. Clone the repository using Git. 
-2. Double click or drag the Index.html file into the browser.
+2. Double click or drag the index.html file into the browser.
